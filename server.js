@@ -108,6 +108,43 @@ app.get("/crear", async (req, res) => {
 
 });
 
+
+app.get("/productos", async (req, res) => {
+
+  try {
+
+    const productos = await Producto.find();
+
+    res.json(productos);
+
+  } catch (error) {
+
+    res.status(500).json(error);
+
+  }
+
+  app.get("/productos/:categoria", async (req, res) => {
+
+  try {
+
+    const categoria = req.params.categoria;
+
+    const productos = await Producto.find({
+      categoria: categoria
+    });
+
+    res.json(productos);
+
+  } catch (error) {
+
+    res.status(500).json(error);
+
+  }
+
+});
+
+
+});
 app.listen(3000, () => {
   console.log("Servidor corriendo en puerto 3000");
 })
