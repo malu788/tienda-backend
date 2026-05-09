@@ -6,7 +6,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static("public"));
 mongoose.connect(
   "mongodb+srv://admin:Admin1234@cluster0.ixsxgn2.mongodb.net/tienda24?retryWrites=true&w=majority"
 )
@@ -22,6 +22,8 @@ mongoose.connect(
 const ProductoSchema = new mongoose.Schema({
   nombre: String,
   descripcion: String,
+  detalles:String,
+  presentacion:String,
   precio: Number,
   unidad: String,
   imagen: String
@@ -38,6 +40,14 @@ app.get("/crear", async (req, res) => {
     await Producto.deleteMany();
 
     const productos = [
+      {
+  nombre: "Clorox Anti-Splash",
+  descripcion: "Elimina el 99,9% de bacterias. Limpia, desinfecta, blanquea y desmancha.",
+  precio: 5500,
+  unidad: "1955 g",
+  categoria: "Aseo del hogar",
+  imagen: "/img/cloro.jpg"
+},
 
 
       {
@@ -46,7 +56,7 @@ app.get("/crear", async (req, res) => {
         precio: 3500,
         unidad: "unidad",
         categoria: "Aseo del hogar",
-        imagen: "https://images.unsplash.com/photo-1581578731548-c64695cc6952"
+        imagen: "/img/deter.jpg"
       },
       {
         nombre: "Detergente",
@@ -54,7 +64,7 @@ app.get("/crear", async (req, res) => {
         precio: 6500,
         unidad: "unidad",
         categoria: "Aseo del hogar",
-        imagen: "https://images.unsplash.com/photo-1581578731548-c64695cc6952"
+        imagen: "/img/foto1.jpg"
       },
 
       {
@@ -63,7 +73,7 @@ app.get("/crear", async (req, res) => {
         precio: 2500,
         unidad: "unidad",
         categoria: "Aseo del hogar",
-        imagen: "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1"
+        imagen: "/img/foto2.jpg"
       },
 
       {
@@ -72,7 +82,7 @@ app.get("/crear", async (req, res) => {
         precio: 3000,
         unidad: "kg",
         categoria: "Despensa",
-        imagen: "https://images.unsplash.com/photo-1586201375761-83865001e31c"
+        imagen: "/img/foto3.jpg"
       },
 
       {
@@ -81,7 +91,7 @@ app.get("/crear", async (req, res) => {
         precio: 2000,
         unidad: "paquete",
         categoria: "Despensa",
-        imagen: "https://images.unsplash.com/photo-1603133872878-684f208fb84b"
+        imagen: "/img/p.jpg"
       },
 
       {
@@ -90,7 +100,7 @@ app.get("/crear", async (req, res) => {
         precio: 1800,
         unidad: "kg",
         categoria: "Despensa",
-        imagen: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15"
+        imagen: "/img/a.jpg"
       },
 
 
@@ -107,8 +117,6 @@ app.get("/crear", async (req, res) => {
   }
 
 });
-
-
 app.get("/productos", async (req, res) => {
 
   try {
@@ -123,7 +131,10 @@ app.get("/productos", async (req, res) => {
 
   }
 
-  app.get("/productos/:categoria", async (req, res) => {
+});
+
+
+app.get("/productos/:categoria", async (req, res) => {
 
   try {
 
@@ -144,7 +155,12 @@ app.get("/productos", async (req, res) => {
 });
 
 
-});
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0" ,() => {
   console.log("Servidor corriendo en puerto 3000");
-})
+});
+
+
+  
+
+
+
