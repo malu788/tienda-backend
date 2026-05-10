@@ -138,30 +138,22 @@ app.get("/productos/:categoria", async (req, res) => {
   try {
 
     const categoria =
-      decodeURIComponent(req.params.categoria);
+      decodeURIComponent(req.params.categoria)
+      .trim()
+      .toLowerCase();
 
     const productos = await Producto.find();
 
-    const filtrados = productos.filter((p) => {
+    const filtrados = productos.filter((p) =>
 
-      const categoriaDB =
-        String(p.categoria || "")
-          .toLowerCase()
-          .trim();
-
-      const categoriaURL =
-        String(categoria || "")
-          .toLowerCase()
-          .trim();
-
-      return categoriaDB.includes(categoriaURL);
-    });
+      p.categoria
+        .trim()
+        .toLowerCase() === categoria
+    );
 
     res.json(filtrados);
 
   } catch (error) {
-
-    console.log(error);
 
     res.status(500).json(error);
   }
