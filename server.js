@@ -141,18 +141,21 @@ app.get("/productos/:categoria", async (req, res) => {
     const categoria =
       decodeURIComponent(req.params.categoria);
 
-    const productos = await Producto.find({
-  categoria: categoria.trim()
-});
+    const productos = await Producto.find();
 
+    const filtrados = productos.filter((p) =>
 
-    res.json(productos);
+      p.categoria === categoria
+    );
+
+    res.json(filtrados);
 
   } catch (error) {
 
     res.status(500).json(error);
   }
 });
+
 
 
 app.listen(3000, "0.0.0.0" ,() => {
