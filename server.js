@@ -142,11 +142,9 @@ app.get("/productos/:categoria", async (req, res) => {
       decodeURIComponent(req.params.categoria);
 
     const productos = await Producto.find({
+  categoria: categoria.trim()
+});
 
-      categoria: {
-        $regex: new RegExp(categoria, "i"),
-      },
-    });
 
     res.json(productos);
 
