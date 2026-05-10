@@ -133,7 +133,6 @@ app.get("/productos", async (req, res) => {
   }
 
 });
-
 app.get("/productos/:categoria", async (req, res) => {
 
   try {
@@ -143,19 +142,30 @@ app.get("/productos/:categoria", async (req, res) => {
 
     const productos = await Producto.find();
 
-    const filtrados = productos.filter((p) =>
+    const filtrados = productos.filter((p) => {
 
-      p.categoria === categoria
-    );
+      const categoriaDB =
+        String(p.categoria || "")
+          .toLowerCase()
+          .trim();
+
+      const categoriaURL =
+        String(categoria || "")
+          .toLowerCase()
+          .trim();
+
+      return categoriaDB.includes(categoriaURL);
+    });
 
     res.json(filtrados);
 
   } catch (error) {
 
+    console.log(error);
+
     res.status(500).json(error);
   }
 });
-
 
 
 app.listen(3000, "0.0.0.0" ,() => {
