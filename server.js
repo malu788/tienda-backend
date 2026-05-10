@@ -134,7 +134,6 @@ app.get("/productos", async (req, res) => {
 
 });
 
-
 app.get("/productos/:categoria", async (req, res) => {
 
   try {
@@ -147,7 +146,6 @@ app.get("/productos/:categoria", async (req, res) => {
       categoria: {
         $regex: new RegExp(categoria, "i"),
       },
-
     });
 
     res.json(productos);
@@ -157,7 +155,6 @@ app.get("/productos/:categoria", async (req, res) => {
     res.status(500).json(error);
   }
 });
-
 
 
 app.listen(3000, "0.0.0.0" ,() => {
