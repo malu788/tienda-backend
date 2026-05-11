@@ -151,8 +151,23 @@ app.get("/promociones", async (req, res) => {
 
   }
 });
+app.get("/promociones", async (req, res) => {
+  try {
 
+    const promociones = await Producto.find({
+      promocion: true,
+    });
 
+    res.json(promociones);
+
+  } catch (error) {
+
+    res.status(500).json({
+      mensaje: "Error al obtener promociones",
+    });
+
+  }
+});
 
 
 
